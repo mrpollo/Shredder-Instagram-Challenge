@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Shredder-instagram-challenge by mrpollo</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/mrpollo/Shredder-Instagram-Challenge">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/mrpollo/Shredder-Instagram-Challenge/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/mrpollo/Shredder-Instagram-Challenge/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Shredder-instagram-challenge</h1>
+          <p></p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/mrpollo">mrpollo</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h3>Shredder-Instagram-Challenge</h3>
+
+<p>My take on the Instagram Challenge not really wanting a job, just wanted to test my py foo.</p>
+
+<h3>Technical Details</h3>
+
+<p><a href="http://instagram-engineering.tumblr.com/post/12651721845/instagram-engineering-challenge-the-unshredder">Link to original article here</a></p>
+
+<h4>Instagram Engineering Challenge: The Unshredder</h4>
+
+<p><img src="http://media.tumblr.com/tumblr_luifuzcjzz1qm4rc3.png" alt="Shredder"></p>
+
+<h4>THE CHALLENGE</h4>
+
+<p>Your challenge, if you choose to accept it, is to write a simple script that takes a shredded image in as input:</p>
+
+<p><img src="http://media.tumblr.com/tumblr_luigsoCv3s1qm4rc3.png" alt="Initial Image"></p>
+
+<p>and outputs an unshredded and reconstituted image. That is, imagine if you took an image, divided it into an even number of columns and shuffled those columns randomly to produce a shredded image. Then, take that image into the script and output the original image:</p>
+
+<p><img src="http://media.tumblr.com/tumblr_luih7og6QM1qm4rc3.png" alt="Final Image"></p>
+
+<p>We tackled this, and our solution took a few hours plus another few hours for the bonus challenge (more on that later).</p>
+
+<h4>THE REWARD</h4>
+
+<p>Due to overwhelming response, we’ve run out of our entire stock of tee-shirts! With future challenges we’ll be offering a reward for the first group of people who respond.</p>
+
+<h4>GUIDELINES</h4>
+
+<p>1) Choose a scripting language of your choice. We chose Python for its relative ease prototyping and availability of the Python Imaging Library (PIL) that allowed us to do the image stuff we wanted to do. You can easily use something like C++ or Ruby for this as well.</p>
+
+<p>2) Produce a script that reads in a shredded image (like the one below) and produces the original image. For this image, you can assume shreds are 32 pixels wide and uniformly spaced across the image horizontally. These shreds are scattered at random and if rearranged, will yield the original image.</p>
+
+<p>Use this image as the source image - it’s 640 pixels wide and 359 pixels high.</p>
+
+<p>3) Your solution should algorithmically unshred the image. This means it should work on arbitrarily shredded images we feed your script that are shredded in the same manner.</p>
+
+<p>4) BONUS CHALLENGE: We went the extra mile and made our script even spiffier by auto-detecting how wide the uniform strips are. Extra bonus points to anyone who works this into their solution. But first, we’d recommend getting your script to work assuming 32 pixel-wide shreds. For this you can assume shreds will never end up next to each other correctly in the source image.</p>
+
+<p>5) The key to this problem is being able to access pixel data in the image. We used Python Imaging Library - PIL (<a href="http://www.pythonware.com/products/pil/">http://www.pythonware.com/products/pil/</a>) which made it very easy to parse. See the PIL tips below. If you’re using Ruby, check out RMagick (<a href="http://rmagick.rubyforge.org/">http://rmagick.rubyforge.org/</a>) which is a gem that serves the same purpose as PIL. C++ has the boost libraries and included is “GIL” which will help you. If you’re using another language, there are most certainly equivalents of PIL, RMagick, and GIL.</p>
+
+<h4>SUBMIT YOUR SOLUTION</h4>
+
+<p>We’re no longer offering the tee-shirt reward but if you’re still interested in working with us, please submit your information &amp; a link to your solution here: <a href="http://bit.ly/unshredder">http://bit.ly/unshredder</a></p>
+
+<h4>PIL TIPS</h4>
+
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">‘</span><span class="nb">file</span><span class="o">.</span><span class="n">jpg</span><span class="err">’</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">getdata</span><span class="p">()</span> <span class="c"># This gets pixel data</span>
+
+<span class="c"># Access an arbitrary pixel. Data is stored as a 2d array where rows are</span>
+<span class="c"># sequential. Each element in the array is a RGBA tuple (red, green, blue,</span>
+<span class="c"># alpha).</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">90</span>
+<span class="k">def</span> <span class="nf">get_pixel_value</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+   <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span>
+   <span class="n">pixel</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">y</span> <span class="o">*</span> <span class="n">width</span> <span class="o">+</span> <span class="n">x</span><span class="p">]</span>
+   <span class="k">return</span> <span class="n">pixel</span>
+<span class="k">print</span> <span class="n">get_pixel_value</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="c"># Create a new image of the same size as the original</span>
+<span class="c"># and copy a region into the new image</span>
+<span class="n">NUMBER_OF_COLUMNS</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">unshredded</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="err">“</span><span class="n">RGBA</span><span class="err">”</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">shred_width</span> <span class="o">=</span> <span class="n">unshredded</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">NUMBER_OF_COLUMNS</span>
+<span class="n">shred_number</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">shred_width</span> <span class="o">*</span> <span class="n">shred_number</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">shred_width</span><span class="p">,</span> <span class="n">height</span>
+<span class="n">source_region</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+<span class="n">destination_point</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">unshredded</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">source_region</span><span class="p">,</span> <span class="n">destination_point</span><span class="p">)</span>
+<span class="c"># Output the new image</span>
+<span class="n">unshredded</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="err">“</span><span class="n">unshredded</span><span class="o">.</span><span class="n">jpg</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">JPEG</span><span class="err">”</span><span class="p">)</span>
+</pre></div>
+
+<h4>TIPS</h4>
+
+<p>1) Don’t overthink it. Use of really complex algorithms isn’t needed. Our solution WITH the bonus exercise comes in at just over 150 lines of python.</p>
+
+<p>2) Think about how you would quantify whether or not two shreds ‘fit’ together by using pixel data</p>
+
+<p>3) Assume you’re using the source image, or other normal photographs without edge-case patterns.</p>
+
+<p>4) There are edge cases where the script we wrote with our approach will not work because of repeating patterns. This is OK in your script as well. Don’t worry about special cases – focus on making the sample images work that we’ve provided.</p>
+
+<p>4) Bonus Challenge: If you decide you want to auto-detect how many columns there are in an image, you should remember that there are a finite amount of columns that are possible given an image of a certain width if you assume columns are evenly distributed and uniformly sized.</p>
+
+<h4>SHREDDER</h4>
+
+<p>If you’d like to produce your own sample images, you can use our simple script here to generate some:</p>
+
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span>
+
+<span class="n">SHREDS</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">sample</span><span class="o">.</span><span class="n">png</span><span class="err">”</span><span class="p">)</span>
+<span class="n">shredded</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="err">“</span><span class="n">RGBA</span><span class="err">”</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">size</span>
+<span class="n">shred_width</span> <span class="o">=</span> <span class="n">width</span><span class="o">/</span><span class="n">SHREDS</span>
+<span class="n">sequence</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SHREDS</span><span class="p">)</span>
+<span class="n">shuffle</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">shred_index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+    <span class="n">shred_x1</span><span class="p">,</span> <span class="n">shred_y1</span> <span class="o">=</span> <span class="n">shred_width</span> <span class="o">*</span> <span class="n">shred_index</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">shred_x2</span><span class="p">,</span> <span class="n">shred_y2</span> <span class="o">=</span> <span class="n">shred_x1</span> <span class="o">+</span> <span class="n">shred_width</span><span class="p">,</span> <span class="n">height</span>
+    <span class="n">region</span> <span class="o">=</span><span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="n">shred_x1</span><span class="p">,</span> <span class="n">shred_y1</span><span class="p">,</span> <span class="n">shred_x2</span><span class="p">,</span> <span class="n">shred_y2</span><span class="p">))</span>
+    <span class="n">shredded</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="p">(</span><span class="n">shred_width</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="n">shredded</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="err">“</span><span class="n">sample_shredded</span><span class="o">.</span><span class="n">png</span><span class="err">”</span><span class="p">)</span>
+</pre></div>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-37040692-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
